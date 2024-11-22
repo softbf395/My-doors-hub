@@ -56,19 +56,19 @@ loadstring(game: HttpGet("https://raw.githubusercontent.com/jsienkiewicz13/Doors
   	end    
 })
 Sec2:AddButton({
-	Name = "Mayhem Mode"
+	Name = "Mayhem Mode",
 	Callback = function()
 		loadstring(game:HttpGet("https://github.com/HollowedOutMods/MayhemMode/blob/main/loader.lua?raw=true"))()
 	end
 })
 Sec2:AddButton({
-	Name = "NM Mode"
+	Name = "NM Mode",
 	Callback = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/jsienkiewicz13/Doors-Modes-Scripts/refs/heads/main/NightmareModeObfuscatedMyVersion.lua"))()
 	end
 })
 Sec2:AddButton({
-	Name = "Impossible Mode"
+	Name = "Impossible Mode",
 	Callback = function()
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/Ukazix/impossible-mode/main/Protected_79.lua.txt'))()
 	end
