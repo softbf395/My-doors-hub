@@ -36,7 +36,21 @@ Sec1:AddButton({
 loadstring(game: HttpGet("https://raw.githubusercontent.com/notpoiu/mspaint/main/main.lua"))()
   	end    
 })
-
+Sec1:AddButton({
+	Name = "Item Spawner",
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/skxllytheskeleton/doors-item-giver-menu/refs/heads/main/itemspawn1.txt"))()
+	end
+})
+local Sec3 = Tab1:AddSection({
+	Name = "Doors Scripts: Mine (includes my modes)"
+})
+Sec3:AddButton({
+	Name = "THE TRIALS MODE",
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/softbf395/Trials-mode/refs/heads/main/Main.luau"))()
+	end
+})
 --[[
 Name = <string> - The name of the button.
 Callback = <function> - The function of the button.
