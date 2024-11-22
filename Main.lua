@@ -74,7 +74,7 @@ Sec2:AddButton({
 	end
 })
 Sec2:AddButton({
-	Name = "Pure NM Mode"
+	Name = "Pure NM Mode",
 	Callback = function()
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/jsienkiewicz13/Doors-Modes-Scripts/refs/heads/main/Pure_Nightmare_Mode_Fixed.lua'))()
 	end
