@@ -51,6 +51,12 @@ Sec3:AddButton({
 loadstring(game:HttpGet("https://raw.githubusercontent.com/softbf395/Trials-mode/refs/heads/main/Main.luau"))()
 	end
 })
+Sec3:AddButton({
+	Name = "HARDCORE (CRAFTER VARIENT) MODE (By me and Greysoniss5 so it's here)",
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SoftieGrey/Hardcore-mode/refs/heads/main/Main.luau"))()
+	end
+})
 --[[
 Name = <string> - The name of the button.
 Callback = <function> - The function of the button.
