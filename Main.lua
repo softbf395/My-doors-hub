@@ -1,101 +1,149 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Doors Hub By Aedaniss7", HidePremium = false, SaveConfig = true, ConfigFolder = "DoorsHubByAedaniss7", IntroEnabled = true, IntroText = 'Doors Hub'})
+local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")()
+local CloseBind=Enum.KeyCode.RightControl
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local function MakeDraggable(topbarobject, object)
+	local Dragging = nil
+	local DragInput = nil
+	local DragStart = nil
+	local StartPosition = nil
 
---[[
-Name = <string> - The name of the UI.
-HidePremium = <bool> - Whether or not the user details shows Premium status or not.
-SaveConfig = <bool> - Toggles the config saving in the UI.
-ConfigFolder = <string> - The name of the folder where the configs are saved.
-IntroEnabled = <bool> - Whether or not to show the intro animation.
-IntroText = <string> - Text to show in the intro animation.
-IntroIcon = <string> - URL to the image you want to use in the intro animation.
-Icon = <string> - URL to the image you want displayed on the window.
-CloseCallback = <function> - Function to execute when the window is closed.
-]]
-local Tab1 = Window:MakeTab({
-	Name = "Main Scripts",
-	Icon = "rbxassetid://0",
-	PremiumOnly = false
-})
+	local function Update(input)
+		local Delta = input.Position - DragStart
+		local pos =
+			UDim2.new(
+				StartPosition.X.Scale,
+				StartPosition.X.Offset + Delta.X,
+				StartPosition.Y.Scale,
+				StartPosition.Y.Offset + Delta.Y
+			)
+		object.Position = pos
+	end
 
---[[
-Name = <string> - The name of the tab.
-Icon = <string> - The icon of the tab.
-PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
-]]
-local Sec1 = Tab1:AddSection({
-	Name = "Doors Scripts: Hotel"
-})
+	topbarobject.InputBegan:Connect(
+		function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				Dragging = true
+				DragStart = input.Position
+				StartPosition = object.Position
+
+				input.Changed:Connect(
+					function()
+						if input.UserInputState == Enum.UserInputState.End then
+							Dragging = false
+						end
+					end
+				)
+			end
+		end
+	)
+
+	topbarobject.InputChanged:Connect(
+		function(input)
+			if
+				input.UserInputType == Enum.UserInputType.MouseMovement or
+					input.UserInputType == Enum.UserInputType.Touch
+			then
+				DragInput = input
+			end
+		end
+	)
+
+	UserInputService.InputChanged:Connect(
+		function(input)
+			if input == DragInput and Dragging then
+				Update(input)
+			end
+		end
+	)
+end
+if UserInputService.TouchEnabled==true then
+	local CloseBtn=Instance.new("TextButton", Instance.new("ScreenGui", game.CoreGui))
+	CloseBtn.Size=UDim2.new(0.1,0,0.1,0)
+	MakeDraggable(CloseBtn, CloseBtn)
+	CloseBtn.BackgroundTransparency=0
+	CloseBtn.TextScaled=true
+	CloseBtn.Text="MOBILE: Toggle Doors Hub (Aedaniss7's Doors Hub)"
+	CloseBtn.MouseButton1Click:Connect(function()
+		local VIM=game:GetService("VirtualInputManager")
+		VIM:SendKeyEvent(true, CloseBind, false, nil)
+		wait()
+		VIM:SendKeyEvent(false, CloseBind, false, nil)
+	end)
+end
+local win = Flux:Window("Aedaniss7's Doors Hub", "for DOORS", Color3.fromRGB(255, 110, 48), CloseBind)
+local tab = win:Tab("Doors: Scripts", "http://www.roblox.com/asset/?id=6023426915")
+--[[tab:Button("Kill all", "This function may not work sometimes and you can get banned.", function()
+Flux:Notification("Killed all players successfully!", "Alright")
+end)
+tab:Label("This is just a label.")
+tab:Line()
+tab:Toggle("Auto-Farm Coins", "Automatically collects coins for you!", function(t)
+print(t)
+end)
+tab:Slider("Walkspeed", "Makes your faster.", 0, 100,16,function(t)
+print(t)
+end)
+tab:Dropdown("Part to aim at", {"Torso","Head","Penis"}, function(t)
+print(t)
+end)
+tab:Colorpicker("ESP Color", Color3.fromRGB(255,1,1), function(t)
+print(t)
+end)
+tab:Textbox("Gun Power", "This textbox changes your gun power, so you can kill everyone faster and easier.", true, function(t)
+print(t)
+end)
+tab:Bind("Kill Bind", Enum.KeyCode.Q, function()
+print("Killed a random person!")
+end)
+win:Tab("Tab 2", "http://www.roblox.com/asset/?id=6022668888")]]
 
 --[[
 Name = <string> - The name of the section.
 ]]
-Sec1:AddButton({
-	Name = "Activate MSPaint",
-	Callback = function()
-loadstring(game: HttpGet("https://raw.githubusercontent.com/notpoiu/mspaint/main/main.lua"))()
-  	end    
-})
-Sec1:AddButton({
-	Name = "Item Spawner",
-	Callback = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/skxllytheskeleton/doors-item-giver-menu/refs/heads/main/itemspawn1.txt"))()
-	end
-})
-local Sec3 = Tab1:AddSection({
-	Name = "Doors Scripts: Mine (includes my modes)"
-})
-Sec3:AddButton({
-	Name = "THE TRIALS MODE",
-	Callback = function()
+--tab:Button("MSPaint", "Activates MSPaint", function() loadstring(game: HttpGet("https://raw.githubusercontent.com/notpoiu/mspaint/main/main.lua"))() flux:Notification("Activated MSPaint!", "You can now exit out of this notification.") end)
+tab:Label("Doors Scripts: Mine (includes my modes)")
+tab:Button("THE TRIALS MODE", "",
+	 function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/softbf395/Trials-mode/refs/heads/main/Main.luau"))()
-	end
-})
-Sec3:AddButton({
-	Name = "HARDCORE (CRAFTER VARIENT) MODE (By me and Greysoniss5 so it's here)",
-	Callback = function()
+	end)
+tab:Button("HARDCORE (CRAFTER VARIENT) MODE (By me and Greysoniss5 so it's here)","",
+	function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/SoftieGrey/Hardcore-mode/refs/heads/main/Main.luau"))()
-	end
-})
+	end)
 --[[
 Name = <string> - The name of the button.
 Callback = <function> - The function of the button.
 ]]
-local Tab2 = Window:MakeTab({
-	Name = "Modes",
-	Icon = "rbxassetid://17308358558",
-	PremiumOnly = false
-})
-local Sec2 = Tab2:AddSection({
-	Name = "Doors Scripts: Modes"
-})
-Sec2:AddButton({
-	Name = "HardCore mode V5 Beta",
-	Callback = function()
+local tab2 = win:Tab("Doors: Modes", "http://www.roblox.com/asset/?id=6022668888")
+tab2:Button("Hardcore V5 Beta", "",
+function()
 loadstring(game: HttpGet("https://raw.githubusercontent.com/jsienkiewicz13/Doors-Modes-Scripts/refs/heads/main/HardcoreV5Beta.lua"))()
-  	end    
-})
-Sec2:AddButton({
-	Name = "Mayhem Mode",
-	Callback = function()
+  	end   )
+tab2:Button("Mayhem", "",
+	 function()
 		loadstring(game:HttpGet("https://github.com/HollowedOutMods/MayhemMode/blob/main/loader.lua?raw=true"))()
-	end
-})
-Sec2:AddButton({
-	Name = "NM Mode",
-	Callback = function()
+	end)
+tab2:Button( "Nightmare", "",
+	function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/jsienkiewicz13/Doors-Modes-Scripts/refs/heads/main/NightmareModeObfuscatedMyVersion.lua"))()
-	end
-})
-Sec2:AddButton({
-	Name = "Impossible Mode",
-	Callback = function()
+	end)
+tab2:Button("Impossible Mode", "",
+	 function()
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/Ukazix/impossible-mode/main/Protected_79.lua.txt'))()
-	end
-})
-Sec2:AddButton({
-	Name = "Pure NM Mode",
-	Callback = function()
+	end)
+tab2:Button("Pure Nightmare", "",
+	 function()
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/jsienkiewicz13/Doors-Modes-Scripts/refs/heads/main/Pure_Nightmare_Mode_Fixed.lua'))()
-	end
-})
+	end)
+tab2:Label("My Modes")
+tab2:Button("THE TRIALS MODE", "",
+	 function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/softbf395/Trials-mode/refs/heads/main/Main.luau"))()
+	end)
+tab2:Button(
+	"HARDCORE (CRAFTER VARIENT) MODE (By me and Greysoniss5 so it's here)", "",
+	function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SoftieGrey/Hardcore-mode/refs/heads/main/Main.luau"))()
+	end)
